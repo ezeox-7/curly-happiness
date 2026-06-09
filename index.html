@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus Store — Tecnologia Premium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #09090f;
+      --surface: #111118;
+      --card:    #16161f;
+      --card2:   #1c1c28;
+      --border:  #252535;
+      --accent:  #6c63ff;
+      --accent2: #ff4d6d;
+      --green:   #00d68f;
+      --gold:    #f0b429;
+      --text:    #f0f0f8;
+      --muted:   #6b6b8a;
+      --radius:  14px;
+      --trans:   .22s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── ANNOUNCEMENT BAR ── */
+    .announcement {
+      background: var(--accent);
+      color: #fff;
+      text-align: center;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .3px;
+      padding: 9px 20px;
+    }
+    .announcement span { opacity: .75; margin: 0 10px; }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(9,9,15,.92);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 clamp(16px, 5vw, 72px);
+      display: flex; align-items: center; justify-content: space-between;
+      height: 66px; gap: 20px;
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.35rem;
+      letter-spacing: -1px; color: var(--text);
+      white-space: nowrap;
+    }
+    .logo span { color: var(--accent); }
+
+    .header-search {
+      flex: 1; max-width: 360px;
+      display: flex; align-items: center;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 50px; padding: 0 16px; gap: 10px;
+      transition: border-color var(--trans);
+    }
+    .header-search:focus-within { border-color: var(--accent); }
+    .header-search input {
+      background: none; border: none; outline: none;
+      color: var(--text); font-family: 'DM Sans', sans-serif;
+      font-size: .88rem; width: 100%; padding: 10px 0;
+    }
+    .header-search input::placeholder { color: var(--muted); }
+    .header-search svg { color: var(--muted); flex-shrink: 0; }
+
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+
+    .icon-btn {
+      width: 40px; height: 40px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--muted);
+      transition: color var(--trans), border-color var(--trans);
+      position: relative;
+    }
+    .icon-btn:hover { color: var(--text); border-color: var(--accent); }
+    .icon-btn .badge-dot {
+      position: absolute; top: 6px; right: 6px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent2); border: 2px solid var(--bg);
+    }
+
+    nav { display: flex; gap: 6px; }
+    @media (max-width: 860px) { nav { display: none; } .header-search { display: none; } }
+    nav a {
+      color: var(--muted); text-decoration: none;
+      font-size: .88rem; font-weight: 500;
+      padding: 8px 14px; border-radius: 8px;
+      transition: color var(--trans), background var(--trans);
+    }
+    nav a:hover { color: var(--text); background: var(--surface); }
+
+    /* ── HERO ── */
+    .hero-wrap {
+      background: linear-gradient(160deg, #0e0e1c 0%, #09090f 60%);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero {
+      max-width: 1280px; margin: 0 auto;
+      padding: clamp(50px,8vw,100px) clamp(16px,5vw,72px);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    }
+    @media(max-width:768px){ .hero{ grid-template-columns:1fr; } .hero-visual{ display:none; } }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(108,99,255,.1); border: 1px solid rgba(108,99,255,.25);
+      color: #a89fff; border-radius: 50px;
+      font-size: .72rem; font-weight: 700; letter-spacing: 1px;
+      padding: 5px 14px; text-transform: uppercase; margin-bottom: 20px;
+    }
+    .hero-eyebrow::before { content:''; width:6px; height:6px; background:#a89fff; border-radius:50%; animation: blink 1.6s infinite; }
+    @keyframes blink{ 0%,100%{opacity:1} 50%{opacity:.15} }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.2rem,5vw,3.8rem);
+      font-weight: 800; line-height: 1.08;
+      letter-spacing: -2px; margin-bottom: 18px;
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+
+    .hero-sub {
+      color: var(--muted); font-size: 1rem; line-height: 1.7;
+      max-width: 460px; margin-bottom: 36px;
+    }
+
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--accent); color: #fff;
+      font-weight: 700; font-size: .92rem;
+      padding: 13px 28px; border-radius: 50px; text-decoration: none;
+      border: none; cursor: pointer;
+      transition: transform var(--trans), box-shadow var(--trans), opacity var(--trans);
+      box-shadow: 0 4px 24px rgba(108,99,255,.4);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(108,99,255,.5); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: transparent; color: var(--text);
+      font-weight: 600; font-size: .92rem;
+      padding: 13px 28px; border-radius: 50px; text-decoration: none;
+      border: 1px solid var(--border); cursor: pointer;
+      transition: border-color var(--trans), background var(--trans);
+    }
+    .btn-ghost:hover { border-color: var(--accent); background: rgba(108,99,255,.06); }
+
+    .hero-stats {
+      display: flex; gap: 32px; margin-top: 48px; padding-top: 36px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-item strong {
+      display: block; font-family: 'Syne', sans-serif;
+      font-size: 1.5rem; font-weight: 800; letter-spacing: -1px;
+    }
+    .stat-item span { font-size: .8rem; color: var(--muted); }
+
+    /* hero visual */
+    .hero-visual { display: flex; align-items: center; justify-content: center; }
+    .hero-card-preview {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 28px;
+      width: 100%; max-width: 380px;
+      box-shadow: 0 40px 80px rgba(0,0,0,.5);
+    }
+    .hcp-img {
+      height: 200px; background: linear-gradient(135deg,#1a1a30,#2a1540);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; position: relative; overflow: hidden;
+    }
+    .hcp-img::after {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(circle at 30% 50%, rgba(108,99,255,.3), transparent 70%);
+    }
+    .hcp-tag {
+      position:absolute; top:12px; left:12px; z-index:1;
+      background: var(--gold); color:#000;
+      font-size:.68rem; font-weight:800; padding:3px 10px; border-radius:50px;
+      text-transform: uppercase; letter-spacing:.5px;
+    }
+    .hcp-name { font-family:'Syne',sans-serif; font-weight:700; font-size:1.05rem; margin-bottom:6px; }
+    .hcp-row { display:flex; align-items:center; justify-content:space-between; }
+    .hcp-price { font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800; color:var(--accent); }
+    .hcp-stars { color:var(--gold); font-size:.85rem; letter-spacing:1px; }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      padding: 20px clamp(16px,5vw,72px);
+    }
+    .trust-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 32px;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--muted); font-size: .84rem; font-weight: 500;
+    }
+    .trust-item svg { color: var(--green); flex-shrink: 0; }
+
+    /* ── CATEGORIES ── */
+    .cats-wrap {
+      max-width: 1280px; margin: 0 auto;
+      padding: 60px clamp(16px,5vw,72px) 0;
+    }
+    .cats-grid {
+      display: flex; gap: 12px; overflow-x: auto;
+      padding-bottom: 4px; scrollbar-width: none;
+    }
+    .cats-grid::-webkit-scrollbar { display:none; }
+    .cat-chip {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--muted); padding: 10px 18px; border-radius: 50px;
+      font-size: .83rem; font-weight: 600; cursor: pointer; white-space: nowrap;
+      transition: all var(--trans);
+    }
+    .cat-chip:hover, .cat-chip.active {
+      background: rgba(108,99,255,.12);
+      border-color: var(--accent); color: var(--text);
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-hd {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 16px; margin-bottom: 32px; flex-wrap: wrap;
+    }
+    .section-hd h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.5rem,3vw,2.2rem);
+      font-weight: 800; letter-spacing: -1px;
+    }
+    .section-hd a {
+      color: var(--accent); text-decoration: none;
+      font-size: .88rem; font-weight: 600;
+      display: flex; align-items: center; gap: 5px;
+      transition: gap var(--trans);
+    }
+    .section-hd a:hover { gap: 9px; }
+
+    /* ── PRODUCTS ── */
+    #produtos {
+      max-width: 1280px; margin: 0 auto;
+      padding: 60px clamp(16px,5vw,72px) 100px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 22px;
+    }
+
+    /* CARD */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform var(--trans), border-color var(--trans), box-shadow var(--trans);
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(108,99,255,.5);
+      box-shadow: 0 20px 50px rgba(0,0,0,.5), 0 0 0 1px rgba(108,99,255,.1);
+    }
+
+    .card-img {
+      height: 200px; position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .card-img svg { width: 100px; height: 100px; position: relative; z-index: 1; }
+
+    .badge {
+      position: absolute; top: 12px; left: 12px; z-index: 2;
+      font-size: .66rem; font-weight: 800; letter-spacing: .5px;
+      padding: 3px 9px; border-radius: 50px; text-transform: uppercase;
+    }
+    .badge-hot   { background: var(--accent2); color:#fff; }
+    .badge-new   { background: var(--green);   color:#000; }
+    .badge-sale  { background: var(--gold);    color:#000; }
+    .badge-best  { background: var(--accent);  color:#fff; }
+
+    .wishlist-btn {
+      position: absolute; top: 12px; right: 12px; z-index: 2;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.1);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--muted);
+      transition: color var(--trans), background var(--trans);
+    }
+    .wishlist-btn:hover { color: var(--accent2); background: rgba(255,77,109,.15); }
+
+    .card-body { padding: 18px 18px 10px; flex:1; display:flex; flex-direction:column; gap:7px; }
+
+    .card-cat {
+      font-size: .69rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    .card-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 1rem; line-height: 1.35;
+    }
+
+    .card-desc { color: var(--muted); font-size: .83rem; line-height: 1.6; flex:1; }
+
+    .card-rating {
+      display: flex; align-items: center; gap: 6px;
+      font-size: .78rem;
+    }
+    .stars { color: var(--gold); letter-spacing: 1px; }
+    .rating-count { color: var(--muted); }
+
+    .card-footer {
+      padding: 14px 18px 18px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .price-block {}
+    .price-old {
+      font-size: .75rem; color: var(--muted);
+      text-decoration: line-through; display: block; line-height: 1;
+    }
+    .price-now {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem; font-weight: 800; line-height: 1.1;
+    }
+
+    .btn-buy {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--accent); color: #fff;
+      font-weight: 700; font-size: .82rem;
+      border: none; padding: 10px 18px; border-radius: 50px;
+      cursor: pointer; white-space: nowrap;
+      transition: transform var(--trans), box-shadow var(--trans), opacity var(--trans);
+      box-shadow: 0 4px 16px rgba(108,99,255,.35);
+    }
+    .btn-buy:hover { transform: scale(1.04); box-shadow: 0 6px 24px rgba(108,99,255,.55); }
+
+    /* ── BANNER PROMO ── */
+    .promo-banner {
+      max-width: 1280px; margin: 0 auto;
+      padding: 0 clamp(16px,5vw,72px) 60px;
+    }
+    .promo-inner {
+      background: linear-gradient(135deg, #1a1040, #2a1060);
+      border: 1px solid rgba(108,99,255,.3);
+      border-radius: 20px; padding: 40px 48px;
+      display: flex; align-items: center; justify-content: space-between; gap: 32px;
+      flex-wrap: wrap;
+      position: relative; overflow: hidden;
+    }
+    .promo-inner::before {
+      content:''; position:absolute; right:-80px; top:-80px;
+      width:300px; height:300px; border-radius:50%;
+      background: radial-gradient(circle, rgba(108,99,255,.3), transparent 70%);
+      pointer-events: none;
+    }
+    .promo-inner h3 {
+      font-family:'Syne',sans-serif; font-size:1.6rem; font-weight:800;
+      letter-spacing:-1px; margin-bottom:8px;
+    }
+    .promo-inner p { color:rgba(255,255,255,.6); font-size:.9rem; }
+
+    /* ── MODAL ── */
+    .overlay {
+      position: fixed; inset:0; z-index:300;
+      background: rgba(0,0,0,.8);
+      backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity:0; pointer-events:none;
+      transition: opacity .25s ease;
+    }
+    .overlay.open { opacity:1; pointer-events:all; }
+
+    .modal {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      width:100%; max-width:480px;
+      padding: 36px;
+      transform: translateY(24px) scale(.96);
+      transition: transform .3s ease;
+      position: relative;
+    }
+    .overlay.open .modal { transform: none; }
+
+    .modal-close {
+      position:absolute; top:16px; right:16px;
+      background:var(--surface); border:1px solid var(--border);
+      color:var(--muted); width:34px; height:34px;
+      border-radius:50%; font-size:1rem;
+      cursor:pointer; display:flex; align-items:center; justify-content:center;
+      transition: color var(--trans), border-color var(--trans);
+    }
+    .modal-close:hover { color:var(--text); border-color:var(--accent2); }
+
+    .modal h3 {
+      font-family:'Syne',sans-serif; font-size:1.35rem; font-weight:800;
+      margin-bottom:4px;
+    }
+    .modal-sub { color:var(--muted); font-size:.85rem; margin-bottom:24px; }
+
+    .order-summary {
+      background: var(--surface); border:1px solid var(--border);
+      border-radius:12px; padding:16px 18px;
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom:24px; gap:12px;
+    }
+    .os-label { font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px; }
+    .os-name { font-weight:600; font-size:.95rem; }
+    .os-price { font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:800; color:var(--accent); white-space:nowrap; }
+
+    .field { margin-bottom:16px; }
+    .field label { display:block; font-size:.76rem; font-weight:700; letter-spacing:.5px; text-transform:uppercase; color:var(--muted); margin-bottom:7px; }
+    .field input {
+      width:100%; background:var(--surface); border:1px solid var(--border);
+      border-radius:10px; color:var(--text); padding:12px 15px;
+      font-family:'DM Sans',sans-serif; font-size:.93rem; outline:none;
+      transition: border-color var(--trans), box-shadow var(--trans);
+    }
+    .field input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(108,99,255,.15); }
+    .field input::placeholder { color:var(--muted); }
+
+    .secure-note {
+      display:flex; align-items:center; gap:7px;
+      color:var(--muted); font-size:.76rem; margin-top:12px;
+      justify-content:center;
+    }
+    .secure-note svg { color:var(--green); }
+
+    .btn-finish {
+      width:100%; padding:14px;
+      background:var(--accent); color:#fff;
+      font-family:'Syne',sans-serif; font-size:.95rem; font-weight:800;
+      border:none; border-radius:50px; cursor:pointer; margin-top:6px;
+      box-shadow:0 4px 24px rgba(108,99,255,.4);
+      transition:transform var(--trans), box-shadow var(--trans);
+      display:flex; align-items:center; justify-content:center; gap:9px;
+    }
+    .btn-finish:hover { transform:translateY(-2px); box-shadow:0 8px 36px rgba(108,99,255,.55); }
+    .btn-finish:disabled { background:var(--border); color:var(--muted); cursor:not-allowed; box-shadow:none; transform:none; }
+
+    .spinner { width:17px; height:17px; border:3px solid rgba(255,255,255,.25); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; }
+    @keyframes spin{ to{ transform:rotate(360deg); } }
+
+    /* ── TOAST ── */
+    .toast {
+      position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(16px);
+      z-index:400; min-width:300px; max-width:88vw;
+      background:var(--card2); border:1px solid var(--border);
+      border-radius:14px; padding:16px 22px;
+      display:flex; align-items:center; gap:13px;
+      opacity:0; pointer-events:none;
+      transition: opacity .3s ease, transform .3s ease;
+      box-shadow:0 20px 50px rgba(0,0,0,.6);
+    }
+    .toast.show { opacity:1; pointer-events:all; transform:translateX(-50%) translateY(0); }
+    .toast.success { border-color:rgba(0,214,143,.35); }
+    .toast.error   { border-color:rgba(255,77,109,.35); }
+    .toast-body strong { display:block; font-size:.92rem; font-weight:700; margin-bottom:2px; }
+    .toast-body span   { font-size:.78rem; color:var(--muted); }
+
+    /* ── FOOTER ── */
+    .footer-top {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 60px clamp(16px,5vw,72px);
+    }
+    .footer-grid {
+      max-width:1280px; margin:0 auto;
+      display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px;
+    }
+    @media(max-width:768px){ .footer-grid{ grid-template-columns:1fr 1fr; } }
+    @media(max-width:480px){ .footer-grid{ grid-template-columns:1fr; } }
+
+    .footer-brand .logo { font-size:1.25rem; display:block; margin-bottom:14px; }
+    .footer-brand p { color:var(--muted); font-size:.85rem; line-height:1.7; max-width:240px; }
+
+    .footer-col h4 {
+      font-family:'Syne',sans-serif; font-size:.82rem; font-weight:700;
+      letter-spacing:1px; text-transform:uppercase; color:var(--muted);
+      margin-bottom:16px;
+    }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .footer-col ul li a {
+      color:var(--muted); text-decoration:none; font-size:.87rem;
+      transition:color var(--trans);
+    }
+    .footer-col ul li a:hover { color:var(--text); }
+
+    .footer-bottom {
+      border-top:1px solid var(--border);
+      padding:22px clamp(16px,5vw,72px);
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px;
+    }
+    .footer-bottom p { color:var(--muted); font-size:.8rem; }
+    .payment-icons { display:flex; gap:8px; align-items:center; }
+    .pay-chip {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:6px; padding:4px 10px;
+      font-size:.7rem; font-weight:700; color:var(--muted); letter-spacing:.3px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ANNOUNCEMENT -->
+  <div class="announcement">
+    🚚 Frete grátis em compras acima de R$ 299 <span>•</span> Até 12x sem juros <span>•</span> Entrega expressa disponível
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">Nexus<span>.</span>Store</div>
+
+    <div class="header-search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Buscar produtos…" />
+    </div>
+
+    <nav>
+      <a href="#produtos">Produtos</a>
+      <a href="#produtos">Ofertas</a>
+      <a href="#produtos">Lançamentos</a>
+      <a href="#produtos">Marcas</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="icon-btn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <div class="icon-btn">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <div class="badge-dot"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero-wrap">
+    <div class="hero">
+      <div>
+        <div class="hero-eyebrow">Coleção 2025 disponível</div>
+        <h1>Tecnologia que<br/><em>transforma</em><br/>seu dia a dia</h1>
+        <p class="hero-sub">Os melhores produtos de tecnologia com garantia, suporte especializado e entrega para todo o Brasil.</p>
+        <div class="hero-btns">
+          <a href="#produtos" class="btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Explorar produtos
+          </a>
+          <a href="#produtos" class="btn-ghost">Ver ofertas</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item"><strong>+18k</strong><span>clientes</span></div>
+          <div class="stat-item"><strong>4.9★</strong><span>avaliação</span></div>
+          <div class="stat-item"><strong>2 dias</strong><span>entrega</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card-preview">
+          <div class="hcp-img">
+            <div class="hcp-tag">Destaque</div>
+            <svg width="90" height="90" viewBox="0 0 90 90" fill="none">
+              <rect x="15" y="25" width="60" height="40" rx="6" fill="#1a1a40" stroke="#6c63ff" stroke-width="1.5"/>
+              <rect x="22" y="32" width="46" height="26" rx="3" fill="#0d0d20"/>
+              <circle cx="28" cy="36" r="2" fill="#ff4d6d"/>
+              <circle cx="35" cy="36" r="2" fill="#f0b429"/>
+              <circle cx="42" cy="36" r="2" fill="#00d68f"/>
+              <rect x="26" y="42" width="22" height="3" rx="1.5" fill="rgba(108,99,255,0.5)"/>
+              <rect x="26" y="48" width="16" height="3" rx="1.5" fill="rgba(108,99,255,0.3)"/>
+              <line x1="45" y1="65" x2="45" y2="73" stroke="#6c63ff" stroke-width="1.5"/>
+              <rect x="35" y="73" width="20" height="5" rx="2.5" fill="#1a1a30" stroke="#6c63ff" stroke-width="1"/>
+            </svg>
+          </div>
+          <div class="hcp-name">Ultrabook Pro 14" M3</div>
+          <div style="color:var(--muted);font-size:.82rem;margin-bottom:12px;">16GB RAM · 512GB SSD</div>
+          <div class="hcp-row">
+            <div class="hcp-price">R$ 4.799</div>
+            <div class="hcp-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Entrega em todo o Brasil
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Compra 100% segura
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        Troca em 30 dias
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.15a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Suporte 7 dias por semana
+      </div>
+      <div class="trust-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Até 12x sem juros
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="cats-wrap">
+    <div class="cats-grid">
+      <div class="cat-chip active">✦ Todos</div>
+      <div class="cat-chip">🎧 Áudio</div>
+      <div class="cat-chip">⌚ Wearables</div>
+      <div class="cat-chip">⌨️ Periféricos</div>
+      <div class="cat-chip">💻 Notebooks</div>
+      <div class="cat-chip">📱 Smartphones</div>
+      <div class="cat-chip">🖥️ Monitores</div>
+      <div class="cat-chip">📷 Câmeras</div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section id="produtos">
+    <div class="section-hd">
+      <h2>Produtos em Destaque</h2>
+      <a href="#">Ver todos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="products-grid">
+
+      <!-- 1 -->
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#0f0f20,#1e1040);">
+          <div class="badge badge-best">Mais Vendido</div>
+          <div class="wishlist-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <svg viewBox="0 0 100 100" fill="none">
+            <path d="M20 50C20 33.43 33.43 20 50 20s30 13.43 30 30" stroke="#6c63ff" stroke-width="3" stroke-linecap="round"/>
+            <rect x="13" y="48" width="12" height="20" rx="5" fill="#6c63ff" opacity=".9"/>
+            <rect x="75" y="48" width="12" height="20" rx="5" fill="#6c63ff" opacity=".9"/>
+            <path d="M25 60c0 8 7 15 15 15h20c8 0 15-7 15-15" stroke="rgba(108,99,255,0.3)" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Áudio</div>
+          <div class="card-name">Headphone Sony WH-1000XM5</div>
+          <div class="card-desc">Cancelamento ativo de ruído líder do setor, 30h de bateria, áudio Hi-Res certificado.</div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(2.847)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="price-block">
+            <span class="price-old">R$ 2.199</span>
+            <span class="price-now">R$ 1.799</span>
+          </div>
+          <button class="btn-buy" onclick="abrirModal('Headphone Sony WH-1000XM5', 1799.00)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Comprar
+          </button>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#0f1a0f,#102010);">
+          <div class="badge badge-new">Novo</div>
+          <div class="wishlist-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <svg viewBox="0 0 100 100" fill="none">
+            <rect x="36" y="22" width="28" height="56" rx="7" fill="#111820" stroke="#00d68f" stroke-width="1.5"/>
+            <rect x="42" y="28" width="16" height="30" rx="3" fill="#0a0f0a"/>
+            <rect x="42" y="22" width="5" height="6" rx="2" fill="#00d68f" opacity=".4"/>
+            <rect x="53" y="22" width="5" height="6" rx="2" fill="#00d68f" opacity=".4"/>
+            <rect x="42" y="68" width="5" height="6" rx="2" fill="#00d68f" opacity=".4"/>
+            <rect x="53" y="68" width="5" height="6" rx="2" fill="#00d68f" opacity=".4"/>
+            <circle cx="50" cy="43" r="7" stroke="#00d68f" stroke-width="1.5" fill="none"/>
+            <line x1="50" y1="37" x2="50" y2="43" stroke="#00d68f" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="50" y1="43" x2="55" y2="43" stroke="#00d68f" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Wearables</div>
+          <div class="card-name">Apple Watch Series 10</div>
+          <div class="card-desc">Tela Always-On, sensor ECG, GPS + Cellular, resistente a água até 50m.</div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(5.312)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="price-block">
+            <span class="price-old">&nbsp;</span>
+            <span class="price-now">R$ 3.299</span>
+          </div>
+          <button class="btn-buy" onclick="abrirModal('Apple Watch Series 10', 3299.00)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Comprar
+          </button>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#1a0f10,#300a14);">
+          <div class="badge badge-hot">Oferta</div>
+          <div class="wishlist-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <svg viewBox="0 0 100 100" fill="none">
+            <rect x="16" y="36" width="68" height="28" rx="5" fill="#1a0d10" stroke="#ff4d6d" stroke-width="1.5"/>
+            <rect x="22" y="42" width="7" height="6" rx="2" fill="#ff4d6d" opacity=".7"/>
+            <rect x="32" y="42" width="7" height="6" rx="2" fill="#ff4d6d" opacity=".6"/>
+            <rect x="42" y="42" width="7" height="6" rx="2" fill="#ff4d6d" opacity=".5"/>
+            <rect x="52" y="42" width="7" height="6" rx="2" fill="#ff4d6d" opacity=".6"/>
+            <rect x="62" y="42" width="7" height="6" rx="2" fill="#ff4d6d" opacity=".7"/>
+            <rect x="22" y="52" width="7" height="6" rx="2" fill="#ff4d6d" opacity=".4"/>
+            <rect x="32" y="52" width="7" height="6" rx="2" fill="#ff4d6d" opacity=".5"/>
+            <rect x="42" y="52" width="18" height="6" rx="2" fill="#ff4d6d" opacity=".6"/>
+            <rect x="63" y="52" width="6" height="6" rx="2" fill="#ff4d6d" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Periféricos</div>
+          <div class="card-name">Teclado Mecânico Keychron Q3</div>
+          <div class="card-desc">Layout TKL, switches Gateron Pro, alumínio usinado, retroiluminação RGB por tecla.</div>
+          <div class="card-rating"><span class="stars">★★★★☆</span><span class="rating-count">(1.204)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="price-block">
+            <span class="price-old">R$ 649</span>
+            <span class="price-now">R$ 499</span>
+          </div>
+          <button class="btn-buy" onclick="abrirModal('Teclado Mecânico Keychron Q3', 499.00)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Comprar
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#0a1020,#101830);">
+          <div class="badge badge-new">Lançamento</div>
+          <div class="wishlist-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <svg viewBox="0 0 100 100" fill="none">
+            <rect x="18" y="28" width="64" height="44" rx="5" fill="#0d1520" stroke="#6c63ff" stroke-width="1.5"/>
+            <rect x="24" y="33" width="52" height="34" rx="3" fill="#060c14"/>
+            <line x1="42" y1="72" x2="42" y2="80" stroke="#6c63ff" stroke-width="1.5"/>
+            <line x1="58" y1="72" x2="58" y2="80" stroke="#6c63ff" stroke-width="1.5"/>
+            <line x1="36" y1="80" x2="64" y2="80" stroke="#6c63ff" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="28" cy="37" r="2" fill="#ff4d6d"/>
+            <circle cx="35" cy="37" r="2" fill="#f0b429"/>
+            <circle cx="42" cy="37" r="2" fill="#00d68f"/>
+            <rect x="28" y="44" width="24" height="3" rx="1.5" fill="rgba(108,99,255,0.5)"/>
+            <rect x="28" y="50" width="18" height="3" rx="1.5" fill="rgba(108,99,255,0.3)"/>
+            <rect x="28" y="56" width="30" height="3" rx="1.5" fill="rgba(108,99,255,0.2)"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Notebooks</div>
+          <div class="card-name">MacBook Air M3 15"</div>
+          <div class="card-desc">Chip Apple M3, 16GB RAM, 512GB SSD, tela Liquid Retina 15.3" com True Tone.</div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(3.678)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="price-block">
+            <span class="price-old">&nbsp;</span>
+            <span class="price-now">R$ 12.999</span>
+          </div>
+          <button class="btn-buy" onclick="abrirModal('MacBook Air M3 15 pol', 12999.00)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Comprar
+          </button>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#0f1820,#0a1828);">
+          <div class="badge badge-sale">-20%</div>
+          <div class="wishlist-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <svg viewBox="0 0 100 100" fill="none">
+            <rect x="25" y="20" width="50" height="60" rx="8" fill="#0d1520" stroke="#00d68f" stroke-width="1.5"/>
+            <rect x="31" y="26" width="38" height="48" rx="4" fill="#060c14"/>
+            <circle cx="50" cy="74" r="3" fill="#00d68f" opacity=".5"/>
+            <rect x="37" y="22" width="26" height="3" rx="1.5" fill="#00d68f" opacity=".3"/>
+            <rect x="34" y="34" width="10" height="10" rx="2" fill="rgba(0,214,143,0.2)" stroke="rgba(0,214,143,0.4)" stroke-width="1"/>
+            <rect x="47" y="34" width="10" height="10" rx="2" fill="rgba(0,214,143,0.2)" stroke="rgba(0,214,143,0.4)" stroke-width="1"/>
+            <rect x="34" y="48" width="10" height="10" rx="2" fill="rgba(0,214,143,0.2)" stroke="rgba(0,214,143,0.4)" stroke-width="1"/>
+            <rect x="47" y="48" width="10" height="10" rx="2" fill="rgba(0,214,143,0.2)" stroke="rgba(0,214,143,0.4)" stroke-width="1"/>
+            <rect x="34" y="62" width="23" height="6" rx="3" fill="rgba(0,214,143,0.3)" stroke="rgba(0,214,143,0.5)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Smartphones</div>
+          <div class="card-name">Samsung Galaxy S25 Ultra</div>
+          <div class="card-desc">Snapdragon 8 Elite, câmera 200MP, S Pen integrado, tela Dynamic AMOLED 6.9".</div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(4.901)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="price-block">
+            <span class="price-old">R$ 9.499</span>
+            <span class="price-now">R$ 7.599</span>
+          </div>
+          <button class="btn-buy" onclick="abrirModal('Samsung Galaxy S25 Ultra', 7599.00)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Comprar
+          </button>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#1a100a,#281808);">
+          <div class="badge badge-best">Top Rated</div>
+          <div class="wishlist-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <svg viewBox="0 0 100 100" fill="none">
+            <rect x="14" y="28" width="72" height="44" rx="4" fill="#141008" stroke="#f0b429" stroke-width="1.5"/>
+            <rect x="18" y="32" width="64" height="36" rx="2" fill="#0a0804"/>
+            <circle cx="50" cy="50" r="14" stroke="#f0b429" stroke-width="2" fill="none"/>
+            <circle cx="50" cy="50" r="8" stroke="#f0b429" stroke-width="1.5" fill="none" opacity=".5"/>
+            <circle cx="50" cy="50" r="3" fill="#f0b429"/>
+            <line x1="50" y1="36" x2="50" y2="40" stroke="#f0b429" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="50" y1="60" x2="50" y2="64" stroke="#f0b429" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="36" y1="50" x2="40" y2="50" stroke="#f0b429" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="60" y1="50" x2="64" y2="50" stroke="#f0b429" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Monitores</div>
+          <div class="card-name">LG UltraWide 34" 5K2K</div>
+          <div class="card-desc">Painel Nano IPS, 5K2K, 144Hz, HDR600, USB-C 96W, perfeito para produtividade.</div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(987)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="price-block">
+            <span class="price-old">R$ 6.800</span>
+            <span class="price-now">R$ 5.499</span>
+          </div>
+          <button class="btn-buy" onclick="abrirModal('Monitor LG UltraWide 34pol 5K2K', 5499.00)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Comprar
+          </button>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#100a1a,#1a0828);">
+          <div class="badge badge-new">Novo</div>
+          <div class="wishlist-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <svg viewBox="0 0 100 100" fill="none">
+            <ellipse cx="50" cy="50" rx="20" ry="20" stroke="#a89fff" stroke-width="1.5" fill="none"/>
+            <ellipse cx="50" cy="50" rx="32" ry="14" stroke="#a89fff" stroke-width="1.5" fill="none" opacity=".5"/>
+            <circle cx="50" cy="50" r="5" fill="#6c63ff"/>
+            <circle cx="50" cy="28" r="4" fill="#6c63ff" opacity=".8"/>
+            <circle cx="50" cy="72" r="3" fill="#6c63ff" opacity=".6"/>
+            <circle cx="82" cy="50" r="3.5" fill="#a89fff" opacity=".7"/>
+            <circle cx="18" cy="50" r="3.5" fill="#a89fff" opacity=".7"/>
+            <path d="M32 36 L50 50 L68 36" stroke="#a89fff" stroke-width="1" opacity=".4"/>
+            <path d="M32 64 L50 50 L68 64" stroke="#a89fff" stroke-width="1" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Áudio</div>
+          <div class="card-name">JBL Charge 6 Speaker</div>
+          <div class="card-desc">Som 360°, IP68, 40h de bateria, carregamento de dispositivos, PartyBoost para múltiplas caixas.</div>
+          <div class="card-rating"><span class="stars">★★★★☆</span><span class="rating-count">(2.103)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="price-block">
+            <span class="price-old">&nbsp;</span>
+            <span class="price-now">R$ 1.299</span>
+          </div>
+          <button class="btn-buy" onclick="abrirModal('JBL Charge 6 Speaker', 1299.00)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Comprar
+          </button>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#0a180a,#0f2010);">
+          <div class="badge badge-hot">-15%</div>
+          <div class="wishlist-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <svg viewBox="0 0 100 100" fill="none">
+            <rect x="30" y="20" width="40" height="60" rx="5" fill="#0a1408" stroke="#00d68f" stroke-width="1.5"/>
+            <circle cx="50" cy="45" r="16" stroke="#00d68f" stroke-width="1.5" fill="none"/>
+            <circle cx="50" cy="45" r="6" fill="#00d68f" opacity=".3" stroke="#00d68f" stroke-width="1"/>
+            <line x1="50" y1="22" x2="50" y2="26" stroke="#00d68f" stroke-width="2" stroke-linecap="round"/>
+            <line x1="50" y1="64" x2="50" y2="68" stroke="#00d68f" stroke-width="2" stroke-linecap="round"/>
+            <line x1="32" y1="45" x2="36" y2="45" stroke="#00d68f" stroke-width="2" stroke-linecap="round"/>
+            <line x1="64" y1="45" x2="68" y2="45" stroke="#00d68f" stroke-width="2" stroke-linecap="round"/>
+            <rect x="42" y="70" width="16" height="5" rx="2.5" fill="#00d68f" opacity=".5"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Câmeras</div>
+          <div class="card-name">Sony Alpha ZV-E10 II</div>
+          <div class="card-desc">Sensor APS-C 26MP, vídeo 4K 60fps, estabilização óptica, ideal para criadores de conteúdo.</div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(1.456)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="price-block">
+            <span class="price-old">R$ 4.199</span>
+            <span class="price-now">R$ 3.569</span>
+          </div>
+          <button class="btn-buy" onclick="abrirModal('Sony Alpha ZV-E10 II', 3569.00)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Comprar
+          </button>
+        </div>
+      </div>
+
+      <!-- 9 -->
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#18100a,#281808);">
+          <div class="badge badge-best">Popular</div>
+          <div class="wishlist-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <svg viewBox="0 0 100 100" fill="none">
+            <path d="M30 62 L50 22 L70 62 Z" fill="#1a1008" stroke="#f0b429" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle cx="50" cy="22" r="5" fill="#f0b429"/>
+            <circle cx="30" cy="62" r="5" fill="#f0b429"/>
+            <circle cx="70" cy="62" r="5" fill="#f0b429"/>
+            <circle cx="50" cy="42" r="8" fill="#f0b429" opacity=".2" stroke="#f0b429" stroke-width="1"/>
+            <line x1="30" y1="62" x2="70" y2="62" stroke="#f0b429" stroke-width="1.5"/>
+            <rect x="40" y="68" width="20" height="10" rx="3" fill="#1a1008" stroke="#f0b429" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Periféricos</div>
+          <div class="card-name">Mouse Logitech MX Master 3S</div>
+          <div class="card-desc">Sensor 8000 DPI, scroll MagSpeed silencioso, 70 dias de bateria, compatível com 3 dispositivos.</div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(6.234)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="price-block">
+            <span class="price-old">R$ 699</span>
+            <span class="price-now">R$ 579</span>
+          </div>
+          <button class="btn-buy" onclick="abrirModal('Mouse Logitech MX Master 3S', 579.00)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Comprar
+          </button>
+        </div>
+      </div>
+
+      <!-- 10 -->
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#0a1018,#0f1828);">
+          <div class="badge badge-new">Lançamento</div>
+          <div class="wishlist-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <svg viewBox="0 0 100 100" fill="none">
+            <rect x="20" y="30" width="60" height="40" rx="6" fill="#0a1018" stroke="#6c63ff" stroke-width="1.5"/>
+            <rect x="26" y="36" width="48" height="28" rx="3" fill="#060c14"/>
+            <rect x="30" y="40" width="6" height="6" rx="1.5" fill="#6c63ff" opacity=".7"/>
+            <rect x="38" y="40" width="6" height="6" rx="1.5" fill="#6c63ff" opacity=".6"/>
+            <rect x="46" y="40" width="6" height="6" rx="1.5" fill="#6c63ff" opacity=".5"/>
+            <rect x="54" y="40" width="6" height="6" rx="1.5" fill="#6c63ff" opacity=".6"/>
+            <rect x="62" y="40" width="6" height="6" rx="1.5" fill="#6c63ff" opacity=".7"/>
+            <rect x="30" y="50" width="6" height="6" rx="1.5" fill="#6c63ff" opacity=".4"/>
+            <rect x="38" y="50" width="6" height="6" rx="1.5" fill="#6c63ff" opacity=".4"/>
+            <rect x="46" y="50" width="14" height="6" rx="1.5" fill="#6c63ff" opacity=".5"/>
+            <rect x="63" y="50" width="5" height="6" rx="1.5" fill="#6c63ff" opacity=".4"/>
+            <line x1="50" y1="70" x2="50" y2="76" stroke="#6c63ff" stroke-width="1.5"/>
+            <rect x="36" y="76" width="28" height="4" rx="2" fill="#6c63ff" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Periféricos</div>
+          <div class="card-name">iPad Magic Keyboard 13"</div>
+          <div class="card-desc">Trackpad de vidro, teclas backlit, porta USB-C, design ultra fino para iPad Pro e Air.</div>
+          <div class="card-rating"><span class="stars">★★★★☆</span><span class="rating-count">(892)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="price-block">
+            <span class="price-old">&nbsp;</span>
+            <span class="price-now">R$ 2.199</span>
+          </div>
+          <button class="btn-buy" onclick="abrirModal('iPad Magic Keyboard 13 pol', 2199.00)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Comprar
+          </button>
+        </div>
+      </div>
+
+      <!-- 11 -->
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#180a10,#2a0f18);">
+          <div class="badge badge-hot">Oferta</div>
+          <div class="wishlist-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <svg viewBox="0 0 100 100" fill="none">
+            <rect x="28" y="25" width="44" height="50" rx="6" fill="#180a10" stroke="#ff4d6d" stroke-width="1.5"/>
+            <rect x="34" y="31" width="32" height="30" rx="3" fill="#0d0508"/>
+            <path d="M38 50 L44 44 L50 50 L56 42 L62 50" stroke="#ff4d6d" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="34" y="65" width="8" height="5" rx="2" fill="#ff4d6d" opacity=".5"/>
+            <rect x="44" y="65" width="8" height="5" rx="2" fill="#ff4d6d" opacity=".3"/>
+            <rect x="54" y="65" width="8" height="5" rx="2" fill="#ff4d6d" opacity=".5"/>
+            <line x1="50" y1="75" x2="50" y2="80" stroke="#ff4d6d" stroke-width="1.5"/>
+            <rect x="38" y="80" width="24" height="4" rx="2" fill="#ff4d6d" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Smartphones</div>
+          <div class="card-name">iPhone 16 Pro Max 256GB</div>
+          <div class="card-desc">Chip A18 Pro, câmera 48MP com zoom óptico 5x, tela Super Retina XDR 6.9", titanium.</div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(8.740)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="price-block">
+            <span class="price-old">R$ 10.999</span>
+            <span class="price-now">R$ 9.799</span>
+          </div>
+          <button class="btn-buy" onclick="abrirModal('iPhone 16 Pro Max 256GB', 9799.00)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Comprar
+          </button>
+        </div>
+      </div>
+
+      <!-- 12 -->
+      <div class="card">
+        <div class="card-img" style="background:linear-gradient(135deg,#0a0f18,#10182a);">
+          <div class="badge badge-sale">-25%</div>
+          <div class="wishlist-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <svg viewBox="0 0 100 100" fill="none">
+            <rect x="22" y="34" width="56" height="32" rx="5" fill="#0a0f18" stroke="#6c63ff" stroke-width="1.5"/>
+            <rect x="28" y="40" width="44" height="20" rx="3" fill="#060c14"/>
+            <path d="M32 50 L38 44 L44 48 L50 42 L56 46 L62 40 L68 50" stroke="#6c63ff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="50" y1="66" x2="50" y2="72" stroke="#6c63ff" stroke-width="1.5"/>
+            <ellipse cx="50" cy="76" rx="12" ry="5" fill="#6c63ff" opacity=".15" stroke="#6c63ff" stroke-width="1" opacity=".3"/>
+            <circle cx="28" cy="38" r="2.5" fill="#6c63ff" opacity=".5"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Wearables</div>
+          <div class="card-name">Garmin Fenix 8 Solar</div>
+          <div class="card-desc">GPS multibanda, carregamento solar, monitor de saúde 24h, modos esportivos avançados.</div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-count">(743)</span></div>
+        </div>
+        <div class="card-footer">
+          <div class="price-block">
+            <span class="price-old">R$ 6.400</span>
+            <span class="price-now">R$ 4.799</span>
+          </div>
+          <button class="btn-buy" onclick="abrirModal('Garmin Fenix 8 Solar', 4799.00)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Comprar
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROMO BANNER -->
+  <div class="promo-banner">
+    <div class="promo-inner">
+      <div>
+        <h3>Assine a Nexus Plus 🚀</h3>
+        <p>Frete grátis ilimitado, acesso antecipado a ofertas e suporte prioritário 24h por apenas R$ 29,90/mês.</p>
+      </div>
+      <a href="#" class="btn-primary" style="flex-shrink:0;">
+        Assinar agora
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="overlay" id="overlay" onclick="fecharModalFora(event)">
+    <div class="modal" id="modal">
+      <button class="modal-close" onclick="fecharModal()">&times;</button>
+
+      <h3>Confirmar Pedido</h3>
+      <p class="modal-sub">Preencha seus dados para concluir a compra.</p>
+
+      <div class="order-summary">
+        <div>
+          <div class="os-label">Produto</div>
+          <div class="os-name" id="modal-produto-nome">—</div>
+        </div>
+        <div class="os-price" id="modal-produto-preco">R$ 0,00</div>
+      </div>
+
+      <input type="hidden" id="campo-produto" />
+      <input type="hidden" id="campo-valor" />
+
+      <div class="field">
+        <label for="campo-nome">Nome completo</label>
+        <input type="text" id="campo-nome" placeholder="Seu nome completo" />
+      </div>
+      <div class="field">
+        <label for="campo-email">E-mail</label>
+        <input type="email" id="campo-email" placeholder="seu@email.com" />
+      </div>
+
+      <button class="btn-finish" id="btn-finalizar" onclick="finalizarCompra()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Finalizar Compra
+      </button>
+
+      <div class="secure-note">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Pagamento 100% seguro e criptografado
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <div style="font-size:1.3rem" id="toast-icon"></div>
+    <div class="toast-body">
+      <strong id="toast-title"></strong>
+      <span id="toast-msg"></span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-top">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">Nexus<span>.</span>Store</div>
+        <p>Sua loja de tecnologia premium com os melhores produtos, preços competitivos e entrega rápida para todo o Brasil.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Institucional</h4>
+        <ul>
+          <li><a href="#">Sobre nós</a></li>
+          <li><a href="#">Carreiras</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Imprensa</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Suporte</h4>
+        <ul>
+          <li><a href="#">Central de Ajuda</a></li>
+          <li><a href="#">Meus Pedidos</a></li>
+          <li><a href="#">Trocas e Devoluções</a></li>
+          <li><a href="#">Fale Conosco</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Categorias</h4>
+        <ul>
+          <li><a href="#">Áudio</a></li>
+          <li><a href="#">Wearables</a></li>
+          <li><a href="#">Notebooks</a></li>
+          <li><a href="#">Smartphones</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Nexus Store LTDA — CNPJ 00.000.000/0001-00 — Todos os direitos reservados.</p>
+    <div class="payment-icons">
+      <div class="pay-chip">VISA</div>
+      <div class="pay-chip">MASTER</div>
+      <div class="pay-chip">PIX</div>
+      <div class="pay-chip">BOLETO</div>
+      <div class="pay-chip">AMEX</div>
+    </div>
+  </div>
+
+  <script>
+    // ===========================================================
+    // ⚙️  SUBSTITUA A URL ABAIXO PELO SEU WEBHOOK DO N8N
+    // ===========================================================
+    const WEBHOOK_URL = "https://eze123.app.n8n.cloud/webhook/loja-nexus"; // 🔴 ALTERE AQUI
+
+    let produtoAtual = "";
+    let valorAtual   = 0;
+
+    function abrirModal(nome, valor) {
+      produtoAtual = nome;
+      valorAtual   = valor;
+      document.getElementById("modal-produto-nome").textContent = nome;
+      document.getElementById("modal-produto-preco").textContent = "R$ " + valor.toLocaleString("pt-BR", {minimumFractionDigits:2});
+      document.getElementById("campo-produto").value = nome;
+      document.getElementById("campo-valor").value   = valor;
+      document.getElementById("overlay").classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function fecharModal() {
+      document.getElementById("overlay").classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    function fecharModalFora(e) {
+      if (e.target === document.getElementById("overlay")) fecharModal();
+    }
+
+    async function finalizarCompra() {
+      const nome  = document.getElementById("campo-nome").value.trim();
+      const email = document.getElementById("campo-email").value.trim();
+      const btn   = document.getElementById("btn-finalizar");
+
+      if (!nome || !email) {
+        mostrarToast("error", "Campos obrigatórios", "Preencha seu nome e e-mail para continuar.");
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        mostrarToast("error", "E-mail inválido", "Digite um endereço de e-mail válido.");
+        return;
+      }
+      if (WEBHOOK_URL === "URL_DO_WEBHOOK_N8N") {
+        mostrarToast("error", "Webhook não configurado", "Substitua URL_DO_WEBHOOK_N8N no código.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<div class="spinner"></div> Processando…`;
+
+      const payload = {
+        cliente : nome,
+        email   : email,
+        produto : produtoAtual,
+        valor   : valorAtual,
+        data    : new Date().toISOString()
+      };
+
+      try {
+        // 📡 POST para o Webhook do n8n
+        const res = await fetch(WEBHOOK_URL, {
+          method  : "POST",
+          headers : { "Content-Type": "application/json" },
+          body    : JSON.stringify(payload)
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        fecharModal();
+        limparFormulario();
+        mostrarToast("success", "Pedido realizado com sucesso! 🎉", `Obrigado, ${nome}! Você receberá a confirmação por e-mail.`);
+
+      } catch (err) {
+        console.error("Erro no webhook:", err);
+        mostrarToast("error", "Falha ao processar", "Verifique sua conexão e tente novamente.");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Finalizar Compra`;
+      }
+    }
+
+    function limparFormulario() {
+      document.getElementById("campo-nome").value  = "";
+      document.getElementById("campo-email").value = "";
+    }
+
+    let toastTimer;
+    function mostrarToast(tipo, titulo, msg) {
+      const t = document.getElementById("toast");
+      document.getElementById("toast-icon").textContent  = tipo === "success" ? "✅" : "❌";
+      document.getElementById("toast-title").textContent = titulo;
+      document.getElementById("toast-msg").textContent   = msg;
+      t.className = `toast ${tipo} show`;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove("show"), 6000);
+    }
+
+    document.addEventListener("keydown", e => { if (e.key === "Escape") fecharModal(); });
+
+    // Filtro de categorias (visual)
+    document.querySelectorAll(".cat-chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        document.querySelectorAll(".cat-chip").forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>
